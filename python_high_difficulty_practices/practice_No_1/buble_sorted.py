@@ -24,12 +24,6 @@ def check_attribute(array, attribute):
 
 
 array = [3, 2, 1]
-print(check_attribute(array, '>'))
+print(check_attribute(array, '<'))
 
-
-slovar = {'hedgehog': 'roman, lidia',
-          'human': 'jora, asad',
-          }
-
-print(slovar['hedgehog'])
 
