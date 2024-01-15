@@ -31,6 +31,11 @@ def get_expenses(array: list) -> list:
 
 
 def get_trand(array: list) -> list:
+    """
+    Calculating trends for each category
+    :param array: list
+    :return: list
+    """
     array = array[1::]
     array_trend = []
 
@@ -57,6 +62,11 @@ def get_trand(array: list) -> list:
 
 
 def get_predict(array: list) -> float:
+    """
+    Forecasting expenses. The projected expense is calculated as the sum of all trends
+    :param array: list
+    :return: list
+    """
     array = array[1::]
     sum_average = 0
     for i in range(len(array)):
@@ -74,6 +84,13 @@ def get_predict(array: list) -> float:
 
 
 def report(array_expenses: list, array_trand: list, predict: float) -> str:
+    """
+    Preparation of the final report based on the previously obtained data
+    :param array_expenses: list
+    :param array_trand: list
+    :param predict: list
+    :return: str
+    """
     text = (f'Углубленный отчет о расходах кафе за последние 12 месяцев\n'
             f'Общие расходы: {array_expenses[0][1]}\n')
 

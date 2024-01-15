@@ -21,14 +21,14 @@ def write_file(text: str, path: str = 'museum_attendance_extended_report.txt'):
     file.close()
 
 
-def calculate_ave(sum: float, nmb_elem: int) -> float:
+def calculate_ave(sum: int, nmb_elem: int) -> int:
     """
     Function of calculating average values
     :param sum: sum of all numbers
     :param nmb_elem: numbers of elements
     :return: average values
     """
-    average = round(sum / nmb_elem, 2)
+    average = sum // nmb_elem
     return average
 
 
@@ -44,6 +44,8 @@ def text_in_array(text: str) -> list:
     if len(array[-1]) == 0:
         array = array[:-1:]
 
+    array = array[1::]
+
     for i in range(len(array)):
         array[i] = array[i].split(',')
 
@@ -56,8 +58,6 @@ def data_for_analysis(path: str) -> list:
     :param path: path to text file (example: path.csv)
     :return: list (example: [[1, 2, 3], ['f', 3, 3]])
     """
-    array = text_in_array(text=read_file(path=path))
-    return array
 
-def average_months(array: list):
-    pass
+    array = text_in_array(read_file(path=path))
+    return array
