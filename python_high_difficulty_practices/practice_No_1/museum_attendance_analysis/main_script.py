@@ -58,10 +58,10 @@ def low_days(array: list) -> list:
 
 
 def data_report(total, ave_months, peek, low):
-    rep = {'Общее количество посетителей': total,
-           'Среднее количество посетителей': ave_months,
-           'Пиковые дни': peek,
-           'Непиковые дни': low}
+    rep = {'Общее количество посетителей:': total,
+           'Среднее количество посетителей:': ave_months,
+           'Пиковые дни:': peek,
+           'Непиковые дни:': low}
     return rep
 
 
@@ -74,7 +74,7 @@ def report(array: list) -> str:
     #     print(key, rep[key])
 
     for key in rep:
-        text_report += f'{key}: {rep[key]}\n'
+        text_report += f'{key} {rep[key]}\n'
 
     return text_report
 

@@ -1,0 +1,4 @@
+1:sunday
+2:tomato, potato
+3:Wonka
+4:1.1.2024
