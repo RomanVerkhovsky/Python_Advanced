@@ -20,7 +20,7 @@ class App:
         :param path: str
         :return:
         """
-        self.__notes_container = controller.HandlerLoadSave.load(path)
+        self.__notes_container = controller.LoadSaver.load(path)
 
     def create_notes_container(self) -> None:
         """
