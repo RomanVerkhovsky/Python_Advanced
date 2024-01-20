@@ -17,17 +17,17 @@ class App:
     def load_notes_container(self, path: str) -> None:
         """
         Load container of notes in application
-        :param path: str
+        :param path: path to notes file
         :return:
         """
         self.__notes_container = controller.LoadSaver.load(path)
 
-    def create_notes_container(self) -> None:
+    def create_notes_container(self, path: str) -> None:
         """
         Creating new avoid notes container
         :return:
         """
-        self.__notes_container = NotesContainer()
+        self.__notes_container = controller.LoadSaver.create_notes(path)
 
     def create_note(self, description: str, id: str = None):
         """

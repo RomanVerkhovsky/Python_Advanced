@@ -4,20 +4,6 @@ from NotesContainer import NotesContainer
 from business_low_level import *
 
 
-class Accession:
-    @staticmethod
-    def load_notes(path: str) -> None:
-        ClickButton.click_load_notes(path)
-
-    @staticmethod
-    def open_notes(id: str) -> str:
-        return ClickButton.click_open_notes(id)
-
-    @staticmethod
-    def validate(path) -> bool:
-        return ClickButton.validate(path)
-
-
 class LoadSaver:
     @staticmethod
     def load(path: str) -> object:
@@ -37,6 +23,28 @@ class LoadSaver:
     @staticmethod
     def save():
         pass
+
+    @staticmethod
+    def create_notes(path: str):
+        pass
+
+
+class Accession:
+    @staticmethod
+    def load_notes(path: str) -> None:
+        ClickButton.click_load_notes(path)
+
+    @staticmethod
+    def open_notes(id: str) -> str:
+        return ClickButton.click_open_notes(id)
+
+    @staticmethod
+    def create_note(description: str, id: str) -> None:
+        return ClickButton.click_create_note(description, id)
+
+    @staticmethod
+    def validate(path) -> bool:
+        return ClickButton.validate(path)
 
 
 class ClickButton:
@@ -58,6 +66,17 @@ class ClickButton:
         return app.open_note(id)
 
     @staticmethod
+    def click_create_note(description: str, id: str) -> None:
+        """
+
+        :param description:
+        :param id:
+        :return:
+        """
+        app.create_note(description, id)
+
+
+    @staticmethod
     def validate(path) -> bool:
         """
         Validate path and file
@@ -67,9 +86,12 @@ class ClickButton:
         return validate(path)
 
 
-app = App()
+app = None
 
 
 def run():
+    global app
+    app = App()
+
     gui = GUI.GUI()
     gui.run()
