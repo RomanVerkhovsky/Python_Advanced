@@ -44,3 +44,14 @@ class NotesContainer:
         if id in self.__notes:
             del self.__notes[id]
             self.__count -= 1
+
+    def check_id(self, id: str) -> bool:
+        """
+        Checking id in notes
+        :param id: str
+        :return: bool
+        """
+        if id in self.__notes:
+            return True
+
+        return False

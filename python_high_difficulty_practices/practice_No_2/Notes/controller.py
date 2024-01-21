@@ -2,6 +2,7 @@ import GUI
 from App import App
 from NotesContainer import NotesContainer
 from business_low_level import *
+import settings
 
 
 class LoadSaver:
@@ -43,8 +44,17 @@ class Accession:
         return ClickButton.click_create_note(description, id)
 
     @staticmethod
+    def check_id(id: str) -> bool:
+        return ClickButton.check_id(id)
+
+    @staticmethod
     def validate(path) -> bool:
         return ClickButton.validate(path)
+
+    @staticmethod
+    def change_path(path: str) -> None:
+        ClickButton.change_path(path)
+
 
 
 class ClickButton:
@@ -84,6 +94,22 @@ class ClickButton:
         :return: bool
         """
         return validate(path)
+
+    @staticmethod
+    def check_id(id: str) -> bool:
+        """
+        Checking exist id
+        :param id: str
+        :return: bool
+        """
+        return app.get_notes_container().check_id(id)
+
+    @staticmethod
+    def change_path(path: str) -> None:
+        settings.current_path = path
+
+    def is_container(self) -> bool:
+        pass
 
 
 app = None
