@@ -22,6 +22,16 @@ class App:
         """
         self.__notes_container = controller.LoadSaver.load(path)
 
+    def save_notes(self, path: str, id: str) -> None:
+        """
+        Save current state of container of notes in notes file
+        :param path: path to notes file
+        :param id: id note in container
+        :return: None
+        """
+        description = self.__notes_container.get_dict()[id].get_description()
+        controller.LoadSaver.save(path, id, description)
+
     def create_notes_container(self, path: str) -> None:
         """
         Creating new avoid notes container

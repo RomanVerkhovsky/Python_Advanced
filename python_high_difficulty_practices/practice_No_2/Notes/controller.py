@@ -22,8 +22,15 @@ class LoadSaver:
         return container
 
     @staticmethod
-    def save():
-        pass
+    def save(path: str, id: str, description: str) -> None:
+        """
+        Save current state of container of notes in notes file
+        :param path: path to notes file
+        :param id: id note in container (name of note)
+        :param description: text of note
+        :return: None
+        """
+        save_notes(path, id, description)
 
     @staticmethod
     def create_notes(path: str):
@@ -56,7 +63,6 @@ class Accession:
         ClickButton.change_path(path)
 
 
-
 class ClickButton:
     @staticmethod
     def click_load_notes(path: str) -> None:
@@ -84,7 +90,6 @@ class ClickButton:
         :return:
         """
         app.create_note(description, id)
-
 
     @staticmethod
     def validate(path) -> bool:

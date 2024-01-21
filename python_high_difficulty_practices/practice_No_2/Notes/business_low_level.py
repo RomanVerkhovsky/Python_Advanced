@@ -3,7 +3,7 @@ import os
 
 def check_exist(path) -> bool:
     """
-    Checking exist file in path
+    Checking exist file to path
     :param path: path to file
     :return: bool
     """
@@ -79,4 +79,8 @@ def handling_entry(text: str):
     pass
 
 
-def save_note(): pass
+def write_file(path, text): pass
+
+
+def save_notes(path: str, id: str, description: str): pass
+
