@@ -1,8 +1,8 @@
-from NotesContainer import NotesContainer
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
 import controller
 
 
-class App:
+class Notebook:
     """Main class for working with notes"""
     def __init__(self) -> None:
         self.__notes_container = NotesContainer()
@@ -20,7 +20,7 @@ class App:
         :param path: path to notes file
         :return:
         """
-        self.__notes_container = controller.LoadSaver.load(path)
+        self.__notes_container = controller.SaveLoader.load(path)
 
     def save_notes(self, path: str, id: str) -> None:
         """
@@ -30,14 +30,14 @@ class App:
         :return: None
         """
         description = self.__notes_container.get_dict()[id].get_description()
-        controller.LoadSaver.save(path, id, description)
+        controller.SaveLoader.save(path, id, description)
 
-    def create_notes_container(self, path: str) -> None:
-        """
-        Creating new avoid notes container
-        :return:
-        """
-        self.__notes_container = controller.LoadSaver.create_notes(path)
+    # def create_notes_container(self, path: str) -> None:
+    #     """
+    #     Creating new avoid notes container
+    #     :return:
+    #     """
+    #     self.__notes_container = controller.SaveLoader.create_notes(path)
 
     def create_note(self, description: str, id: str = None):
         """

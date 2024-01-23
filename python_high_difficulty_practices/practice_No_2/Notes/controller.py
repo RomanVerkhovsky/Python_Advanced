@@ -1,11 +1,12 @@
-import GUI
-from App import App
-from NotesContainer import NotesContainer
-from business_low_level import *
-import settings
+from python_high_difficulty_practices.practice_No_2.Notes.gui import GUI
+from Notebook import Notebook
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.business_logic import *
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic import settings
 
 
-class LoadSaver:
+class SaveLoader:
+
     @staticmethod
     def load(path: str) -> object:
         """
@@ -32,64 +33,38 @@ class LoadSaver:
         """
         save_notes(path, id, description)
 
-    @staticmethod
-    def create_notes(path: str):
-        pass
 
-
-class Accession:
-    @staticmethod
-    def load_notes(path: str) -> None:
-        ClickButton.click_load_notes(path)
+class HandlerGUI:
 
     @staticmethod
-    def open_notes(id: str) -> str:
-        return ClickButton.click_open_notes(id)
-
-    @staticmethod
-    def create_note(description: str, id: str) -> None:
-        return ClickButton.click_create_note(description, id)
-
-    @staticmethod
-    def check_id(id: str) -> bool:
-        return ClickButton.check_id(id)
-
-    @staticmethod
-    def validate(path) -> bool:
-        return ClickButton.validate(path)
-
-    @staticmethod
-    def change_path(path: str) -> None:
-        ClickButton.change_path(path)
-
-
-class ClickButton:
-    @staticmethod
-    def click_load_notes(path: str) -> None:
+    def click_load_notes(path: str, notebook: object.__class__) -> None:
         """
         Loading notes file after pressing the button
+        :param notebook:
         :param path: path to file
         """
-        app.load_notes_container(path)
+        notebook.load_notes_container(path)
 
     @staticmethod
-    def click_open_notes(id: str) -> str:
+    def click_open_notes(id: str, notebook: object.__class__) -> str:
         """
         Open notes after pressing the button
+        :param notebook:
         :param id: id of note in container
         :return: text of note
         """
-        return app.open_note(id)
+        return notebook.open_note(id)
 
     @staticmethod
-    def click_create_note(description: str, id: str) -> None:
+    def click_create_note(description: str, id: str, notebook: object.__class__) -> None:
         """
 
+        :param notebook:
         :param description:
         :param id:
         :return:
         """
-        app.create_note(description, id)
+        notebook.create_note(description, id)
 
     @staticmethod
     def validate(path) -> bool:
@@ -101,13 +76,14 @@ class ClickButton:
         return validate(path)
 
     @staticmethod
-    def check_id(id: str) -> bool:
+    def check_id(id: str, notebook: object.__class__) -> bool:
         """
         Checking exist id
+        :param notebook:
         :param id: str
         :return: bool
         """
-        return app.get_notes_container().check_id(id)
+        return notebook.get_notes_container().check_id(id)
 
     @staticmethod
     def change_path(path: str) -> None:
@@ -117,12 +93,35 @@ class ClickButton:
         pass
 
 
-app = None
+class Accession:
+
+    @staticmethod
+    def load_notes(path: str, notebook: object) -> None:
+        HandlerGUI.click_load_notes(path, notebook)
+
+    @staticmethod
+    def open_notes(id: str, notebook: object) -> str:
+        return HandlerGUI.click_open_notes(id, notebook)
+
+    @staticmethod
+    def create_note(description: str, id: str, notebook: object) -> None:
+        return HandlerGUI.click_create_note(description, id, notebook)
+
+    @staticmethod
+    def check_id(id: str, notebook: object) -> bool:
+        return HandlerGUI.check_id(id, notebook)
+
+    @staticmethod
+    def validate(path) -> bool:
+        return HandlerGUI.validate(path)
+
+    @staticmethod
+    def change_path(path: str) -> None:
+        HandlerGUI.change_path(path)
 
 
 def run():
-    global app
-    app = App()
+    notebook = Notebook()
 
-    gui = GUI.GUI()
+    gui = GUI.GUI(notebook)
     gui.run()

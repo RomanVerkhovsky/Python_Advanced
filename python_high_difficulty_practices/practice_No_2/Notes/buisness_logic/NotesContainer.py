@@ -1,4 +1,4 @@
-from Note import Note
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.Note import Note
 
 
 class NotesContainer:
