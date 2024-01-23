@@ -1,4 +1,4 @@
-from python_high_difficulty_practices.practice_No_2.Notes.gui import GUI
+from python_high_difficulty_practices.practice_No_2.Notes import GUI
 from Notebook import Notebook
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.business_logic import *
@@ -37,34 +37,43 @@ class SaveLoader:
 class HandlerGUI:
 
     @staticmethod
-    def click_load_notes(path: str, notebook: object.__class__) -> None:
+    def click_load_notes(notebook: object.__class__, path: str) -> None:
         """
         Loading notes file after pressing the button
-        :param notebook:
+        :param notebook: link to object of main class Notebook
         :param path: path to file
         """
         notebook.load_notes_container(path)
 
     @staticmethod
-    def click_open_notes(id: str, notebook: object.__class__) -> str:
+    def click_open_notes(notebook: object.__class__, id: str) -> tuple:
         """
         Open notes after pressing the button
-        :param notebook:
+        :param notebook: link to object of main class Notebook
         :param id: id of note in container
-        :return: text of note
+        :return: tuple name of note, text of note
         """
         return notebook.open_note(id)
 
     @staticmethod
-    def click_create_note(description: str, id: str, notebook: object.__class__) -> None:
+    def click_add_note(notebook: object.__class__, content: str, id: str = None) -> None:
         """
-
-        :param notebook:
-        :param description:
-        :param id:
+        Create note and add note to note container
+        :param notebook: link object of main class Notebook
+        :param content: text of note
+        :param id: name of note
         :return:
         """
-        notebook.create_note(description, id)
+        notebook.add_note(content, id)
+
+    @staticmethod
+    def get_dict_notes(notebook: object.__class__) -> dict:
+        """
+        Return notes from container
+        :param notebook: link object of main class Notebook
+        :return:
+        """
+        return notebook.get_dictionary_notes()
 
     @staticmethod
     def validate(path) -> bool:
@@ -76,11 +85,11 @@ class HandlerGUI:
         return validate(path)
 
     @staticmethod
-    def check_id(id: str, notebook: object.__class__) -> bool:
+    def check_id(notebook: object.__class__, id: str) -> bool:
         """
         Checking exist id
-        :param notebook:
-        :param id: str
+        :param notebook: link to object of main class Notebook
+        :param id: name of note
         :return: bool
         """
         return notebook.get_notes_container().check_id(id)
@@ -96,20 +105,24 @@ class HandlerGUI:
 class Accession:
 
     @staticmethod
-    def load_notes(path: str, notebook: object) -> None:
-        HandlerGUI.click_load_notes(path, notebook)
+    def load_notes(notebook: object, path: str) -> None:
+        HandlerGUI.click_load_notes(notebook, path)
 
     @staticmethod
-    def open_notes(id: str, notebook: object) -> str:
-        return HandlerGUI.click_open_notes(id, notebook)
+    def open_notes(notebook: object, id: str) -> tuple:
+        return HandlerGUI.click_open_notes(notebook, id)
 
     @staticmethod
-    def create_note(description: str, id: str, notebook: object) -> None:
-        return HandlerGUI.click_create_note(description, id, notebook)
+    def add_note(notebook: object, description: str, id: str) -> None:
+        return HandlerGUI.click_add_note(notebook, description, id)
 
     @staticmethod
-    def check_id(id: str, notebook: object) -> bool:
-        return HandlerGUI.check_id(id, notebook)
+    def get_dict_notes(notebook: object) -> dict:
+        return HandlerGUI.get_dict_notes(notebook)
+
+    @staticmethod
+    def check_id(notebook: object, id: str) -> bool:
+        return HandlerGUI.check_id(notebook, id)
 
     @staticmethod
     def validate(path) -> bool:

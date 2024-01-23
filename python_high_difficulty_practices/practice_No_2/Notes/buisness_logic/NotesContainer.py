@@ -14,24 +14,29 @@ class NotesContainer:
         """
         return self.__count
 
-    def get_dict(self) -> dict:
+    def get_dict_notes(self) -> dict:
         """
         Returning object class Dict contain object class Notes
         :return: dict
         """
         return self.__notes
 
-    def add_note(self, description: str, id: str = None) -> None:
+    def add_note(self, content: str, id: str) -> None:
         """
-        Adding note in opened list of notes
-        :param description:
-        :param id:
+        Adding note in opened list of notes.
+        If id is not specified, the text of the note is used to create id
+        :param content: text from note
+        :param id: id from note
         :return:
         """
-        if id is None:
-            id = str(self.__count + 1)
+        if id == '':
+            if len(content) != 0:
+                create_id = content.split(' ')
+                id = create_id[0]
+                if len(id) > 10:
+                    id = id[0:10:1]
 
-        note = Note(id, description)
+        note = Note(id, content)
         self.__notes[id] = note
         self.__count += 1
 

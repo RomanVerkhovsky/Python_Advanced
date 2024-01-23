@@ -1,4 +1,5 @@
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.Note import Note
 import controller
 
 
@@ -14,6 +15,12 @@ class Notebook:
         """
         return self.__notes_container
 
+    def get_dictionary_notes(self) -> dict:
+        dictionary = {}
+        for item in self.__open_container().items():
+            dictionary[item[1].get_id()] = item[1].get_content()
+        return dictionary
+
     def load_notes_container(self, path: str) -> None:
         """
         Load container of notes in application
@@ -21,6 +28,12 @@ class Notebook:
         :return:
         """
         self.__notes_container = controller.SaveLoader.load(path)
+
+    def __open_container(self) -> dict:
+        return self.__notes_container.get_dict_notes()
+
+    def get_note(self, id: str) -> object:
+        return self.__notes_container.get_dict_notes()[id]
 
     def save_notes(self, path: str, id: str) -> None:
         """
@@ -39,16 +52,16 @@ class Notebook:
     #     """
     #     self.__notes_container = controller.SaveLoader.create_notes(path)
 
-    def create_note(self, description: str, id: str = None):
+    def add_note(self, content: str, id: str = None):
         """
         Creating a note in the current container
-        :param description: text of note
+        :param content: text of note
         :param id: name of note
         :return:
         """
-        self.__notes_container.add_note(description, id)
+        self.__notes_container.add_note(content, id)
 
-    def delete_note(self, id: str) -> None:
+    def del_note(self, id: str) -> None:
         """
         Deleting a note in the current container
         :param id:
@@ -59,12 +72,19 @@ class Notebook:
 
         self.__notes_container.remove_note(id)
 
-    def open_note(self, id: str) -> str:
+    def open_note(self, id: str) -> tuple:
         """
-
-        :param id:
-        :return: str
+        Return tuple (name, content) from Note object
+        :param id: id of notes in container
+        :return: tuple (name, content)
         """
-        return self.__notes_container.get_dict()[id].get_description()
+        name = self.__open_container()[id].get_id()
+        description = self.__open_container()[id].get_content()
+        return name, description
 
     def search_note(self): pass
+
+    def check_id(self, id: str) -> bool:
+        if id in self.__open_container():
+            return True
+        return False

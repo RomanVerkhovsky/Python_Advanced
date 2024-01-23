@@ -8,12 +8,12 @@ class GUI(Frame):
     root.geometry(size_window)
     root.title(title)
 
-    root.resizable(width=False, height=False)
+    # root.resizable(width=False, height=False)
 
     def __init__(self, notebook: object, master=None) -> None:
 
         self.notebook = notebook
-        controller.Accession.load_notes(current_path, self.notebook)  # downloading the latest notes file
+        controller.Accession.load_notes(self.notebook, current_path)  # downloading the latest notes file
         super().__init__(master)
         self.pack()
 
@@ -121,8 +121,8 @@ class GUI(Frame):
         self.widgets = [self.entry_text, self.button_load_notes, self.button_cancel_add]
 
     def view(self) -> None:
-        for item in self.notebook.get_notes_container().get_dict().items():
-            text = f'{item[0]}: {item[1].get_description()}\n'
+        for item in controller.Accession.get_dict_notes(self.notebook).items():
+            text = f'{item[0]}: {item[1]}\n'
             self.view_notes.insert(END, text)
 
     def load_notes(self) -> None:
@@ -131,7 +131,7 @@ class GUI(Frame):
         :return: None
         """
         if controller.Accession.validate(self.entry_text.get()):
-            controller.Accession.load_notes(self.entry_text.get(), self.notebook)
+            controller.Accession.load_notes(self.notebook, self.entry_text.get())
             controller.Accession.change_path(self.entry_text.get())
             self.main_window()
 
@@ -140,8 +140,8 @@ class GUI(Frame):
         Creating and adding new note in notes file
         :return: None
         """
-        if not controller.Accession.check_id(self.entry_id.get(), self.notebook):
-            controller.Accession.create_note(self.entry_text.get(1.0, 'end-1c'), self.entry_id.get(), self.notebook)
+        if not controller.Accession.check_id(self.notebook, self.entry_id.get()):
+            controller.Accession.add_note(self.notebook, self.entry_text.get(1.0, 'end-1c'), self.entry_id.get())
             self.main_window()
 
     def open_note(self) -> None:
@@ -150,8 +150,8 @@ class GUI(Frame):
         :return: Note
         """
         if len(self.entry_text.get()) != 0:
-            result = controller.Accession.open_notes(self.entry_text.get(), self.notebook)
-            output = Label(text=result, fg="blue", bg="white", height=3)
+            result = controller.Accession.open_notes(self.notebook, self.entry_text.get())
+            output = Label(text=f'{result[0]}: {result[1]}', fg="blue", bg="white", height=3)
             output.pack()
 
     def destroy_into_frame(self) -> None:

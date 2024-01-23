@@ -1,8 +1,8 @@
 class Note:
     """Class to creating note"""
-    def __init__(self, id: str, description: str) -> None:
+    def __init__(self, id: str, content: str) -> None:
         self.__id = id
-        self.__description = description
+        self.__content = content
 
     def get_id(self) -> str:
         """
@@ -11,17 +11,17 @@ class Note:
         """
         return self.__id
 
-    def get_description(self) -> str:
+    def get_content(self) -> str:
         """
         Returning text of note
         :return: str
         """
-        return self.__description
+        return self.__content
 
-    def edit(self, description: str) -> None:
+    def edit(self, content: str) -> None:
         """
         Editing note
-        :param description: new text of note
+        :param content: new text of note
         :return: str
         """
-        self.__description = description
+        self.__content = content
