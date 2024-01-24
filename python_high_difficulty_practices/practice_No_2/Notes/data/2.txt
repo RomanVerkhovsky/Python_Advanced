@@ -1,1 +1,2 @@
-1:notebook
+buy:notebook
+work days:monday, friday

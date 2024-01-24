@@ -4,7 +4,7 @@ import os
 def check_exist(path) -> bool:
     """
     Checking exist file to path
-    :param path: path to file
+    :param path: is path to file
     :return: bool
     """
     return os.path.exists(path)
@@ -16,7 +16,7 @@ def is_notes(path) -> bool:
     :param path: path to notes file
     :return: bool
     """
-    text = read_list_notes(path)
+    text = read_notes(path)
 
     if len(text) == 0:
         return False
@@ -42,7 +42,7 @@ def validate(path: str) -> bool:
     return True
 
 
-def read_list_notes(path) -> str:
+def read_notes(path) -> str:
     """
     Reading file
     :param path: path to notes file
@@ -60,7 +60,7 @@ def create_dict(path) -> dict:
     :param path: path to notes file
     :return: dict
     """
-    text = read_list_notes(path)
+    text = read_notes(path)
 
     dictionary = {}
     array = text.split('\n')
@@ -71,16 +71,36 @@ def create_dict(path) -> dict:
     return dictionary
 
 
+def write_file(path, text) -> None:
+    file = open(path, 'w', encoding='utf8')
+    file.write(text)
+    file.close()
+
+
+def create_to_write(dictionary: dict) -> str:
+    """
+    Preparing to write
+    :param dictionary: is dictionary of notes
+    :return: is notes in str
+    """
+    array = []
+    for items in dictionary.items():
+        array.append(':'.join([items[0], items[1]]))
+
+    text = '\n'.join(array)
+
+    return text
+
+
+def save_notes(path: str, notes: dict) -> None:
+    notes = create_to_write(notes)
+    write_file(path, notes)
+
+
 def handling_entry(text: str):
     if len(text) == 0:
         return
 
     array = []
     pass
-
-
-def write_file(path, text): pass
-
-
-def save_notes(path: str, id: str, description: str): pass
 

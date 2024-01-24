@@ -1,0 +1,3 @@
+buy:notebook
+work days:monday, friday
+red:tomato, apple

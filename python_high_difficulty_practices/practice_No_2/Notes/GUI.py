@@ -8,7 +8,7 @@ class GUI(Frame):
     root.geometry(size_window)
     root.title(title)
 
-    # root.resizable(width=False, height=False)
+    root.resizable(width=False, height=False)
 
     def __init__(self, notebook: object, master=None) -> None:
 
@@ -122,7 +122,8 @@ class GUI(Frame):
 
     def view(self) -> None:
         for item in controller.Accession.get_dict_notes(self.notebook).items():
-            text = f'{item[0]}: {item[1]}\n'
+            text = (f'{item[0]}\n{item[1]}\n'
+                    f'{("________"*10)}\n')
             self.view_notes.insert(END, text)
 
     def load_notes(self) -> None:
@@ -142,11 +143,12 @@ class GUI(Frame):
         """
         if not controller.Accession.check_id(self.notebook, self.entry_id.get()):
             controller.Accession.add_note(self.notebook, self.entry_text.get(1.0, 'end-1c'), self.entry_id.get())
+            controller.Accession.save_notes(self.notebook, path=default_path)
             self.main_window()
 
     def open_note(self) -> None:
         """
-        Opening note from load notes file
+        Opening note from loaded notes file
         :return: Note
         """
         if len(self.entry_text.get()) != 0:

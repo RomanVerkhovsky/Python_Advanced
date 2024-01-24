@@ -35,15 +35,21 @@ class Notebook:
     def get_note(self, id: str) -> object:
         return self.__notes_container.get_dict_notes()[id]
 
-    def save_notes(self, path: str, id: str) -> None:
+    def save_notes(self, path) -> None:
         """
         Save current state of container of notes in notes file
         :param path: path to notes file
-        :param id: id note in container
         :return: None
         """
-        description = self.__notes_container.get_dict()[id].get_description()
-        controller.SaveLoader.save(path, id, description)
+
+        list_notes = self.__open_container()
+
+        dictionary = {}
+        for item in list_notes.items():
+            dictionary[item[0]] = item[1].get_content()
+
+        controller.SaveLoader.save(path, dictionary)
+
 
     # def create_notes_container(self, path: str) -> None:
     #     """

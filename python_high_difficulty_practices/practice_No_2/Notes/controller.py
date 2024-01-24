@@ -23,15 +23,15 @@ class SaveLoader:
         return container
 
     @staticmethod
-    def save(path: str, id: str, description: str) -> None:
+    def save(path: str, notes: dict) -> None:
         """
         Save current state of container of notes in notes file
         :param path: path to notes file
         :param id: id note in container (name of note)
-        :param description: text of note
+        :param notes: text of note
         :return: None
         """
-        save_notes(path, id, description)
+        save_notes(path, notes)
 
 
 class HandlerGUI:
@@ -54,6 +54,16 @@ class HandlerGUI:
         :return: tuple name of note, text of note
         """
         return notebook.open_note(id)
+
+    @staticmethod
+    def click_save_notes(notebook: object.__class__, path: str) -> None:
+        """
+        Save current state notes
+        :param notebook: link to object of main class Notebook
+        :param path: is path to file to save
+        :return:
+        """
+        notebook.save_notes(path)
 
     @staticmethod
     def click_add_note(notebook: object.__class__, content: str, id: str = None) -> None:
@@ -111,6 +121,10 @@ class Accession:
     @staticmethod
     def open_notes(notebook: object, id: str) -> tuple:
         return HandlerGUI.click_open_notes(notebook, id)
+
+    @staticmethod
+    def save_notes(notebook: object, path: str) -> None:
+        HandlerGUI.click_save_notes(notebook, path)
 
     @staticmethod
     def add_note(notebook: object, description: str, id: str) -> None:
