@@ -1,10 +1,26 @@
-import script
+import game_logic
 import gui
+import game_sessions
 
 
-def get_field() -> list:
-    return script.create_game_field()
+def view_field(field: list):
+    gui.view_field(field)
+
+
+def user_input():
+    gui.input_user()
+
+
+class AccessGUI:
+    @staticmethod
+    def input_request():
+        user_input()
+
+    @staticmethod
+    def view_field(field):
+        view_field(field)
 
 
 def run() -> None:
-    gui.view_field()
+    game_sessions.game_pc_and_ai()
+

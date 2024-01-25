@@ -2,21 +2,26 @@ import os
 import control
 
 
-def view_field() -> None:
+def view_field(field: list) -> None:
     """
     View to console game field
     :return:
     """
-    field = control.get_field()
 
-    field[0][0] = 'x'
-    field[1][1] = 'o'
-    field[2][1] = 'o'
+    # field[0][0] = 'x'
+    # field[1][1] = 'o'
+    # field[2][1] = 'o'
 
     # print('original')
-    # print(field, end='\n___________________________________________________\n\n')
+    # for row in range(3):
+    #     print(field[row], end='\n')
 
     print('_________________')
     for row in range(len(field)):
         print(' ', '  |  '.join(field[row]))
         print('_________________')
+
+
+def input_user():
+    input('Your move >> ')
+
