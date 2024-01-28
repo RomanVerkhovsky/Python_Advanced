@@ -1,8 +1,7 @@
-from python_high_difficulty_practices.practice_No_2.Notes import GUI
-from Notebook import Notebook
+from python_high_difficulty_practices.practice_No_2.Notes.gui import GUI
+from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.Notebook import Notebook
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.business_logic import *
-from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic import settings
 
 
 class SaveLoader:
@@ -66,6 +65,16 @@ class HandlerGUI:
         notebook.save_notes(path)
 
     @staticmethod
+    def click_del_notes(notebook: object.__class__, id: str) -> None:
+        """
+        del note from notes container
+        :param notebook: link to object of main class Notebook
+        :param id: name of note
+        :return: None
+        """
+        notebook.del_note(id)
+
+    @staticmethod
     def click_add_note(notebook: object.__class__, content: str, id: str = None) -> None:
         """
         Create note and add note to note container
@@ -105,8 +114,12 @@ class HandlerGUI:
         return notebook.get_notes_container().check_id(id)
 
     @staticmethod
-    def change_path(path: str) -> None:
-        settings.current_path = path
+    def read_current_path() -> str:
+        return read_settings()
+
+    @staticmethod
+    def change_current_path(path: str) -> None:
+        change_current_path(path)
 
     def is_container(self) -> bool:
         pass
@@ -131,6 +144,10 @@ class Accession:
         return HandlerGUI.click_add_note(notebook, description, id)
 
     @staticmethod
+    def del_note(notebook: object, id: str) -> None:
+        HandlerGUI.click_del_notes(notebook, id)
+
+    @staticmethod
     def get_dict_notes(notebook: object) -> dict:
         return HandlerGUI.get_dict_notes(notebook)
 
@@ -143,8 +160,12 @@ class Accession:
         return HandlerGUI.validate(path)
 
     @staticmethod
-    def change_path(path: str) -> None:
-        HandlerGUI.change_path(path)
+    def read_current_path() -> str:
+        return HandlerGUI.read_current_path()
+
+    @staticmethod
+    def change_current_path(path: str) -> None:
+        HandlerGUI.change_current_path(path)
 
 
 def run():

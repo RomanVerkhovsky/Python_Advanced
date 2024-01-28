@@ -40,7 +40,7 @@ class NotesContainer:
         self.__notes[id] = note
         self.__count += 1
 
-    def remove_note(self, id: str) -> None:
+    def del_note(self, id: str) -> None:
         """
         Removing a note from opened list of notes
         :param id: key in list of notes

@@ -1,19 +1,23 @@
 from tkinter import *
-import controller
-from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.settings import *
+from python_high_difficulty_practices.practice_No_2.Notes import controller
+
+size_window = '850x600'
+title = 'Notes'
 
 
 class GUI(Frame):
     root = Tk()
     root.geometry(size_window)
     root.title(title)
-
     root.resizable(width=False, height=False)
 
     def __init__(self, notebook: object, master=None) -> None:
 
-        self.notebook = notebook
-        controller.Accession.load_notes(self.notebook, current_path)  # downloading the latest notes file
+        self.notebook = notebook    # link to object of class Notebook
+
+        # downloading the latest notes file
+        controller.Accession.load_notes(self.notebook, controller.Accession.read_current_path())
+
         super().__init__(master)
         self.pack()
 
@@ -29,6 +33,7 @@ class GUI(Frame):
         self.button_add_note = None
         self.button_cancel_add = None
         self.button_create_notes = None
+        self.button_del_note = None
 
         # container for created widgets
         self.widgets = []
@@ -56,9 +61,12 @@ class GUI(Frame):
         self.button_add_note = Button(text="Add note", command=self.adding_window)
         self.button_add_note.pack(ipadx='30')
 
+        self.button_del_note = Button(text="Del note", command=self.del_note)
+        self.button_del_note.pack(ipadx='30')
+
         # create entry text
-        self.entry_text = Entry(width=70)
-        self.entry_text.pack()
+        self.entry_id = Entry(width=70)
+        self.entry_id.pack()
 
         # notes display area
         self.view_notes = Text()
@@ -67,8 +75,8 @@ class GUI(Frame):
         self.view_notes.pack()
         self.view()
 
-        self.widgets = [self.entry_text, self.button_load_notes, self.button_open_note, self.button_add_note,
-                        self.view_notes, self.scroll]
+        self.widgets = [self.entry_id, self.button_load_notes, self.button_open_note, self.button_add_note,
+                        self.view_notes, self.scroll, self.button_del_note]
 
     def adding_window(self) -> None:
         """
@@ -133,7 +141,7 @@ class GUI(Frame):
         """
         if controller.Accession.validate(self.entry_text.get()):
             controller.Accession.load_notes(self.notebook, self.entry_text.get())
-            controller.Accession.change_path(self.entry_text.get())
+            controller.Accession.change_current_path(self.entry_text.get())
             self.main_window()
 
     def add_note(self) -> None:
@@ -143,7 +151,17 @@ class GUI(Frame):
         """
         if not controller.Accession.check_id(self.notebook, self.entry_id.get()):
             controller.Accession.add_note(self.notebook, self.entry_text.get(1.0, 'end-1c'), self.entry_id.get())
-            controller.Accession.save_notes(self.notebook, path=default_path)
+            controller.Accession.save_notes(self.notebook, path=controller.Accession.read_current_path())
+            self.main_window()
+
+    def del_note(self) -> None:
+        """
+        del note from notes file
+        :return: None
+        """
+        if controller.Accession.check_id(self.notebook, self.entry_id.get()):
+            controller.Accession.del_note(self.notebook, self.entry_id.get())
+            controller.Accession.save_notes(self.notebook, path=controller.Accession.read_current_path())
             self.main_window()
 
     def open_note(self) -> None:
@@ -151,8 +169,8 @@ class GUI(Frame):
         Opening note from loaded notes file
         :return: Note
         """
-        if len(self.entry_text.get()) != 0:
-            result = controller.Accession.open_notes(self.notebook, self.entry_text.get())
+        if len(self.entry_id.get()) != 0:
+            result = controller.Accession.open_notes(self.notebook, self.entry_id.get())
             output = Label(text=f'{result[0]}: {result[1]}', fg="blue", bg="white", height=3)
             output.pack()
 

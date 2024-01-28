@@ -1,4 +1,5 @@
 import os
+import json
 
 
 def check_exist(path) -> bool:
@@ -16,7 +17,7 @@ def is_notes(path) -> bool:
     :param path: path to notes file
     :return: bool
     """
-    text = read_notes(path)
+    text = read(path)
 
     if len(text) == 0:
         return False
@@ -42,7 +43,7 @@ def validate(path: str) -> bool:
     return True
 
 
-def read_notes(path) -> str:
+def read(path) -> str:
     """
     Reading file
     :param path: path to notes file
@@ -60,10 +61,18 @@ def create_dict(path) -> dict:
     :param path: path to notes file
     :return: dict
     """
-    text = read_notes(path)
+    if not check_exist(path):
+        with open('data/settings.json', 'r', encoding='utf8') as file:
+            settings = json.load(file)
+            path = settings['default_path']
 
+    text = read(path)
     dictionary = {}
+
+    if len(text) == 0:
+        return dictionary
     array = text.split('\n')
+
     for i in range(len(array)):
         note = array[i].split(':')
         dictionary[note[0]] = note[1]
@@ -97,10 +106,25 @@ def save_notes(path: str, notes: dict) -> None:
     write_file(path, notes)
 
 
+def read_settings() -> str:
+    with open('data/settings.json', 'r', encoding='utf8') as file:
+        settings = json.load(file)
+        path = settings['current_path']
+        return path
+
+
+def change_current_path(path: str) -> None:
+    with open('data/settings.json', 'r', encoding='utf8') as file:
+        settings = json.load(file)
+        settings['current_path'] = path
+
+    with open('data/settings.json', 'w') as file:
+        json.dump(settings, file)
+
+
 def handling_entry(text: str):
     if len(text) == 0:
         return
 
     array = []
     pass
-

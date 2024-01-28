@@ -1,6 +1,5 @@
 from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.NotesContainer import NotesContainer
-from python_high_difficulty_practices.practice_No_2.Notes.buisness_logic.Note import Note
-import controller
+from python_high_difficulty_practices.practice_No_2.Notes import controller
 
 
 class Notebook:
@@ -50,7 +49,6 @@ class Notebook:
 
         controller.SaveLoader.save(path, dictionary)
 
-
     # def create_notes_container(self, path: str) -> None:
     #     """
     #     Creating new avoid notes container
@@ -73,10 +71,10 @@ class Notebook:
         :param id:
         :return:
         """
-        if id not in self.__notes_container:
+        if id not in self.__notes_container.get_dict_notes():
             return
 
-        self.__notes_container.remove_note(id)
+        self.__notes_container.del_note(id)
 
     def open_note(self, id: str) -> tuple:
         """
