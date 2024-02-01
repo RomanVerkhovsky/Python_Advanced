@@ -2,6 +2,7 @@ from python_high_difficulty_practices.TicTacToe import control
 from python_high_difficulty_practices.TicTacToe.logic.decor import *
 import random
 import os
+import asyncio
 
 
 def clear_console():
@@ -20,7 +21,27 @@ def create_game_field() -> list:
     return field
 
 
+def current_player_container(current_player: str, x_player: list, o_player: list) -> list:
+    """
+    Change player container for checking to win
+    :param current_player: sign current player
+    :param x_player: container - list of moves
+    :param o_player: container - list of moves
+    :return: container of current player
+    """
+    if current_player == 'x':
+        return x_player
+
+    elif current_player == 'o':
+        return o_player
+
+
 def change_player(current_player: str) -> str:
+    """
+    Change player before next move
+    :param current_player: sign of current player
+    :return: next current player
+    """
     if current_player == 'x':
         return 'o'
 
@@ -29,39 +50,46 @@ def change_player(current_player: str) -> str:
 
 
 def is_end_game(field: list) -> bool:
-    count = 0
+    """
+    Checking for draw. If there are empty cells on the field return False, else True
+    :param field: created game field
+    :return: bool
+    """
     for i in field:
-        if i == 'x' or i == 'o':
-            count += 1
+        if ' ' in i:
+            return False
 
-    if count == 9:
-        return True
-
-    return False
+    return True
 
 
 def check_select(select: str, field: list) -> bool:
+    """
+
+    :param select:
+    :param field:
+    :return:
+    """
     field = sum(field, [])
 
     if select.isdigit():
-        if 0 <= int(select) <= 8 and field[int(select)] == ' ':
+        if 1 <= int(select) <= 9 and field[int(select) - 1] == ' ':
             return True
 
     return False
 
 
 def update_state_game(select: str, field: list, player: list, current_player: str) -> None:
-    if 0 <= int(select) <= 2:
-        player.append((0, int(select)))
-        field[0][int(select)] = current_player
+    if 1 <= int(select) <= 3:
+        player.append((0, int(select) - 1))
+        field[0][int(select) - 1] = current_player
 
-    elif 3 <= int(select) <= 5:
-        player.append((1, int(select) - 3))
-        field[1][int(select) - 3] = current_player
+    elif 4 <= int(select) <= 6:
+        player.append((1, int(select) - 4))
+        field[1][int(select) - 4] = current_player
 
-    elif 6 <= int(select) <= 8:
-        player.append((2, int(select) - 6))
-        field[2][int(select) - 6] = current_player
+    elif 7 <= int(select) <= 9:
+        player.append((2, int(select) - 7))
+        field[2][int(select) - 7] = current_player
 
 
 def check_win(player: list) -> bool:
@@ -82,11 +110,11 @@ def check_win(player: list) -> bool:
 
 
 @log
-def move_player(field: list) -> str:
+async def move_player(field: list) -> str:
 
     while True:
         select = control.AccessGUI.input_user()
-        if check_select(select, field) is True:
+        if select == 'q' or check_select(select, field) is True:
             return select
 
         else:
@@ -94,8 +122,9 @@ def move_player(field: list) -> str:
 
 
 @log
-def move_ai(field: list) -> str:
+async def move_ai(field: list) -> str:
 
+    await asyncio.sleep(2)
     while True:
         select = str(random.randint(0, 8))
         if check_select(select, field):
