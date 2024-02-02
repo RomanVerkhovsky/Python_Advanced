@@ -13,11 +13,11 @@ class SaveLoader:
         :param path: path to file
         :return: object class NotesContainer
         """
-        dictionary = create_dict(path)
+        notes = read_json(path)
         container = NotesContainer()
 
-        for key in dictionary:
-            container.add_note(dictionary[key], key)
+        for key in notes:
+            container.add_note(notes[key], key)
 
         return container
 
@@ -26,11 +26,10 @@ class SaveLoader:
         """
         Save current state of container of notes in notes file
         :param path: path to notes file
-        :param id: id note in container (name of note)
         :param notes: text of note
         :return: None
         """
-        save_notes(path, notes)
+        save_notes_json(path, notes)
 
 
 class HandlerGUI:
@@ -101,7 +100,7 @@ class HandlerGUI:
         :param path: path to file
         :return: bool
         """
-        return validate(path)
+        return validate_json(path)
 
     @staticmethod
     def check_id(notebook: object.__class__, id: str) -> bool:
@@ -114,8 +113,8 @@ class HandlerGUI:
         return notebook.get_notes_container().check_id(id)
 
     @staticmethod
-    def read_current_path() -> str:
-        return read_settings()
+    def read_last_path() -> str:
+        return read_last_path()
 
     @staticmethod
     def change_current_path(path: str) -> None:
@@ -161,7 +160,7 @@ class Accession:
 
     @staticmethod
     def read_current_path() -> str:
-        return HandlerGUI.read_current_path()
+        return HandlerGUI.read_last_path()
 
     @staticmethod
     def change_current_path(path: str) -> None:

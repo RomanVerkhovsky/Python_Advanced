@@ -187,4 +187,3 @@ class GUI(Frame):
 
     def run(self):
         self.mainloop()
-
