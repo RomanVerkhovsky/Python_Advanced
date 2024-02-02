@@ -12,19 +12,24 @@ def check_exist(path) -> bool:
     return os.path.exists(path)
 
 
-def read_json(path: str) -> dict:
+def read(path: str) -> dict:
+    """
+    Reading json file
+    :param path: path to file
+    :return: dictionary
+    """
     with open(path, 'r', encoding='utf8') as file:
         dictionary = json.load(file)
         return dictionary
 
 
-def is_notes_json(path) -> bool:
+def is_notes(path) -> bool:
     """
     Validate file for compliance with the application format
     :param path: path to notes file
     :return: bool
     """
-    notes = read_json(path)
+    notes = read(path)
 
     if len(notes) == 0:
         return False
@@ -36,24 +41,30 @@ def is_notes_json(path) -> bool:
     return True
 
 
-def validate_json(path: str) -> bool:
+def validate(path: str) -> bool:
     """
     Validate path and file
     :param path: path to file
     :return: bool
     """
-    if not (check_exist(path) and is_notes_json(path)) is True:
+    if not (check_exist(path) and is_notes(path)) is True:
         return False
 
     return True
 
 
-def save_notes_json(path: str, notes: dict) -> None:
+def save_notes(path: str, notes: dict) -> None:
+    """
+    Save all changes in notes
+    :param path: path to save
+    :param notes: dictionary of notes
+    :return:
+    """
     with open(path, 'w', encoding='utf8') as file:
         json.dump(notes, file)
 
 
-def read_last_path() -> str:
+def open_last_file() -> str:
     """
     Reading last path to notes file from settings
     :return: path

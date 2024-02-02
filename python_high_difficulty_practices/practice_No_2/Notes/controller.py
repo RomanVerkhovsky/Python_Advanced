@@ -13,7 +13,7 @@ class SaveLoader:
         :param path: path to file
         :return: object class NotesContainer
         """
-        notes = read_json(path)
+        notes = read(path)
         container = NotesContainer()
 
         for key in notes:
@@ -29,7 +29,7 @@ class SaveLoader:
         :param notes: text of note
         :return: None
         """
-        save_notes_json(path, notes)
+        save_notes(path, notes)
 
 
 class HandlerGUI:
@@ -100,7 +100,7 @@ class HandlerGUI:
         :param path: path to file
         :return: bool
         """
-        return validate_json(path)
+        return validate(path)
 
     @staticmethod
     def check_id(notebook: object.__class__, id: str) -> bool:
@@ -114,7 +114,7 @@ class HandlerGUI:
 
     @staticmethod
     def read_last_path() -> str:
-        return read_last_path()
+        return open_last_file()
 
     @staticmethod
     def change_current_path(path: str) -> None:
